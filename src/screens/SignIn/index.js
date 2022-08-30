@@ -20,8 +20,8 @@ export default function SignIn() {
 
 
   function handleLogin() {
+    // REGISTER USER
     if (type) {
-      console.log('Cadastrar');
       if (name === '' || email === '' || password === '') { return; }
 
       auth().createUserWithEmailAndPassword(email, password)
@@ -37,7 +37,14 @@ export default function SignIn() {
           console.log(error);
         });
     } else {
-      console.log('Acessar');
+      // LOGIN USER
+      auth().signInWithEmailAndPassword(email, password)
+        .then(() => {
+          navigation.goBack();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }
 
