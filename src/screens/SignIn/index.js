@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import * as S from './styles';
 import { TouchableOpacity } from 'react-native';
 
+
 import auth from '@react-native-firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 
@@ -52,6 +53,7 @@ export default function SignIn() {
     <S.Wrapper>
       <S.BackgroundImg source={imageBackground} resizeMode="cover"  >
         <S.Title>Hello Groups </S.Title>
+
         {type && (<S.Input
           value={name}
           onChangeText={text => setName(text)}
