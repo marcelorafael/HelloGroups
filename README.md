@@ -8,11 +8,14 @@
 <h4> - React Native </h4> 
 <h4> - firebase </h4>
 
+
+<div style="display: flex; flex-direction:row align-items:center;">
 <img src="https://github.com/marcelorafael/HelloGroups/blob/master/src/assets/login.jpeg" width="300" height="600" />
 
 <img src="https://github.com/marcelorafael/HelloGroups/blob/master/src/assets/cad.jpeg" width="300" height="600" />
 
 <img src="https://github.com/marcelorafael/HelloGroups/blob/master/src/assets/WhatsApp%20Image%202022-08-30%20at%2010.02.56%20PM.jpeg" width="300" height="600" />
+</div>
 
 ### Features
 
