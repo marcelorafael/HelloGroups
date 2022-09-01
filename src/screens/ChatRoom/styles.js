@@ -31,11 +31,15 @@ export const Header = styled.View`
   /* align-items: center; */
 `;
 
-export const Title = styled.Text``;
-
 export const Text = styled.Text`
   font-weight: bold;
   font-size: 20px;
+
+  margin-left: 10px;
 `;
 
 export const Button = styled.TouchableOpacity``;
+
+export const Modal = styled.Modal``;
+
+export const List = styled.FlatList``;
