@@ -16,7 +16,7 @@ export const Wrapper = styled.TouchableOpacity.attrs({
   align-items: center;
 
   position: absolute;
-  bottom: 50px;
+  bottom: 10%;
   right: 6%;
 `;
 

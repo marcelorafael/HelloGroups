@@ -2,7 +2,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
 import * as S from './styles';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, ActivityIndicator } from 'react-native';
 
 
 import auth from '@react-native-firebase/auth';
@@ -18,6 +18,7 @@ export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [type, setType] = useState(false);
+  const [loading, setLoading] = useState(false);
 
 
   function handleLogin() {
@@ -25,25 +26,35 @@ export default function SignIn() {
     if (type) {
       if (name === '' || email === '' || password === '') { return; }
 
+      setLoading(true);
+
       auth().createUserWithEmailAndPassword(email, password)
         .then((user) => {
           user.user.updateProfile({
             displayName: name,
           })
             .then(() => {
+              setLoading(false);
               navigation.goBack();
             });
         })
         .catch((error) => {
+          setLoading(false);
           console.log(error);
         });
     } else {
       // LOGIN USER
+      if (email === '' || password === '') { return; }
+
+      setLoading(true);
+
       auth().signInWithEmailAndPassword(email, password)
         .then(() => {
+          setLoading(false);
           navigation.goBack();
         })
         .catch((error) => {
+          setLoading(false);
           console.log(error);
         });
     }
@@ -78,9 +89,13 @@ export default function SignIn() {
         <S.Button onPress={() => handleLogin()}>
           {/* <S.CenterViewButton > */}
           <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={type ? ['#000', '#3075DD'] : ['#3075DD', '#000']} style={{ height: 50, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <S.TextButton>
-              {type ? 'Cadastrar' : 'Acessar'}
-            </S.TextButton>
+            {loading
+              ? <ActivityIndicator size="small" color="#3075DD" />
+              : (
+                <S.TextButton>
+                  {type ? 'Cadastrar' : 'Acessar'}
+                </S.TextButton>
+              )}
           </LinearGradient>
           {/* </S.CenterViewButton> */}
         </S.Button>
