@@ -1,8 +1,13 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 
-import { Modal } from 'react-native';
+import { View, Text } from 'react-native';
+
+import { ActivityIndicator } from 'react-native';
+
+import firestore from '@react-native-firebase/firestore';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import * as S from './styles';
@@ -13,11 +18,15 @@ import ModalRoom from '../../components/ModalRoom';
 import auth from '@react-native-firebase/auth';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 
+import ChatList from '../../components/ChatList';
+
 export default function ChatRoom() {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [threads, setThreads] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleSignOut = () => {
     auth()
@@ -38,6 +47,51 @@ export default function ChatRoom() {
     }
 
   }, [isFocused]);
+
+  useEffect(() => {
+    let isActive = true;
+    setLoading(true);
+
+    function getChats() {
+      firestore()
+        .collection('MESSAGE_THREADS')
+        .orderBy('lastMessage.createAt', 'desc')
+        .limit(10)
+        .get()
+        .then(snapshot => {
+          const threads: any = snapshot.docs.map(documentSnapshot => {
+            return {
+              _id: documentSnapshot.id,
+              name: '',
+              lastMessage: { text: '' },
+              ...documentSnapshot.data(),
+            };
+          });
+
+          if (isActive) {
+            setThreads(threads);
+            setLoading(false);
+
+            console.log(threads);
+          }
+        })
+        .catch();
+    }
+
+    getChats();
+
+    return () => {
+      console.log('UnMounting');
+
+      isActive = false;
+    };
+  }, [isFocused]);
+
+  if (loading) {
+    return (<S.ContainerLoading>
+      <ActivityIndicator size="large" color="#041B4D" />
+    </S.ContainerLoading>);
+  }
 
   return (
     <S.Wrapper>
@@ -61,6 +115,15 @@ export default function ChatRoom() {
       <S.Modal visible={modalVisible} animationType="fade" transparent={true} >
         <ModalRoom setVible={() => setModalVisible(false)} />
       </S.Modal>
+
+      <S.List
+        data={threads}
+        keyExtractor={item => item._id}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => (
+          <ChatList data={item} />
+        )}
+      />
 
 
       <FabButton setVisible={() => setModalVisible(true)} />

@@ -23,6 +23,8 @@ export const Container = styled(LinearGradient).attrs({
 
   padding: 15px;
   padding-top: 50px;
+
+  background-color: #fff;
 `;
 
 export const Header = styled.View`
@@ -43,3 +45,9 @@ export const Button = styled.TouchableOpacity``;
 export const Modal = styled.Modal``;
 
 export const List = styled.FlatList``;
+
+export const ContainerLoading = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
