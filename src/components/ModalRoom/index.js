@@ -6,7 +6,7 @@ import * as S from './styles';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
-const ModalRoom = ({ setVible }) => {
+const ModalRoom = ({ setVible, setUpdateScreen }) => {
   const [roomName, setRoomName] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -39,6 +39,7 @@ const ModalRoom = ({ setVible }) => {
         }).then(() => {
           setLoading(false);
           setVible();
+          setUpdateScreen();
         });
 
       })

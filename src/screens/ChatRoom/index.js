@@ -27,6 +27,7 @@ export default function ChatRoom() {
   const [modalVisible, setModalVisible] = useState(false);
   const [threads, setThreads] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [updateScreen, setUpdateScreen] = useState(false);
 
   const handleSignOut = () => {
     auth()
@@ -85,7 +86,7 @@ export default function ChatRoom() {
 
       isActive = false;
     };
-  }, [isFocused]);
+  }, [isFocused, updateScreen]);
 
   if (loading) {
     return (<S.ContainerLoading>
@@ -113,7 +114,10 @@ export default function ChatRoom() {
       </S.Container>
 
       <S.Modal visible={modalVisible} animationType="fade" transparent={true} >
-        <ModalRoom setVible={() => setModalVisible(false)} />
+        <ModalRoom
+          setUpdateScreen={() => setUpdateScreen(!updateScreen)}
+          setVible={() => setModalVisible(false)}
+        />
       </S.Modal>
 
       <S.List
