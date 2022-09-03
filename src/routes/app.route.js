@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import SignIn from '../screens/SignIn';
 import ChatRoom from '../screens/ChatRoom';
+import Messages from '../screens/Messages';
 // import ChatRoom from '../screens/ChatRoom'
 // import ChatRoom from '../screens/ChatRoom'
 
@@ -23,12 +24,21 @@ export default function AppRoutes(params) {
           headerShown: false,
         }}
       />
+
       <AppStack.Screen
         name="ChatRoom"
         component={ChatRoom}
         options={{
           headerShown: false,
         }}
+      />
+
+      <AppStack.Screen
+        name="Messages"
+        component={Messages}
+        options={({ route }) => ({
+          title: route.params.thread.name,
+        })}
       />
     </AppStack.Navigator>
   );

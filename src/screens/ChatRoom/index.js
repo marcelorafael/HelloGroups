@@ -29,7 +29,7 @@ export default function ChatRoom() {
   const [loading, setLoading] = useState(false);
   const [updateScreen, setUpdateScreen] = useState(false);
 
-  const user = auth().currentUser.toJSON();
+  const user = auth()?.currentUser?.toJSON();
 
   const handleSignOut = () => {
     auth()

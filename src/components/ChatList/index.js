@@ -1,12 +1,19 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { Text } from 'react-native';
+
+import { useNavigation } from '@react-navigation/native';
 
 import * as S from './styles';
 
 export default function ChatList({ data, deleteRoom }) {
+  const navigation = useNavigation();
+
+  const openChat = () => {
+    console.log(data);
+    navigation.navigate('Messages', { thread: data });
+  };
   return (
-    <S.Wrapper onPress={() => { }} onLongPress={() => deleteRoom && deleteRoom()}>
+    <S.Wrapper onPress={() => openChat()} onLongPress={() => deleteRoom && deleteRoom()}>
       <S.Row>
         <S.Container>
           <S.Header>
