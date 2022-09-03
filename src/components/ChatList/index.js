@@ -4,9 +4,9 @@ import { Text } from 'react-native';
 
 import * as S from './styles';
 
-export default function ChatList({ data }) {
+export default function ChatList({ data, deleteRoom }) {
   return (
-    <S.Wrapper>
+    <S.Wrapper onPress={() => { }} onLongPress={() => deleteRoom && deleteRoom()}>
       <S.Row>
         <S.Container>
           <S.Header>

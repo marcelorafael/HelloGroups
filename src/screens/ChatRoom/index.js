@@ -3,7 +3,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 
-import { View, Text } from 'react-native';
+import { Alert } from 'react-native';
 
 import { ActivityIndicator } from 'react-native';
 
@@ -29,6 +29,8 @@ export default function ChatRoom() {
   const [loading, setLoading] = useState(false);
   const [updateScreen, setUpdateScreen] = useState(false);
 
+  const user = auth().currentUser.toJSON();
+
   const handleSignOut = () => {
     auth()
       .signOut()
@@ -38,6 +40,34 @@ export default function ChatRoom() {
       .catch(error => {
         console.log('Não possui usuário');
       });
+  };
+
+  const deleteRoom = (ownerId, idRoom) => {
+    if (ownerId !== user?.uid) { return; }
+
+    Alert.alert(
+      'Atenção',
+      'Você tem certeza que deseja deletar a sala?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => { },
+          style: 'cancel',
+        },
+        {
+          text: 'Ok',
+          onPress: () => { handleDeleteRoom(idRoom); },
+        },
+      ]
+    );
+  };
+
+  const handleDeleteRoom = async (idRoom) => {
+    await firestore().collection('MESSAGE_THREADS')
+      .doc(idRoom)
+      .delete();
+
+    setUpdateScreen(!updateScreen);
   };
 
   useEffect(() => {
@@ -125,7 +155,7 @@ export default function ChatRoom() {
         keyExtractor={item => item._id}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
-          <ChatList data={item} />
+          <ChatList data={item} deleteRoom={() => deleteRoom(item.owner, item._id)} />
         )}
       />
 

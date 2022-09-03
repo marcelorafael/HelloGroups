@@ -17,7 +17,29 @@ const ModalRoom = ({ setVible, setUpdateScreen }) => {
 
     setLoading(true);
 
-    handleCreateRoom();
+    firestore().collection('MESSAGE_THREADS')
+      .get()
+      .then(snapshot => {
+        let myThreads = 0;
+
+        snapshot.docs.map(docItem => {
+          if (docItem.data().owner === user.uid) {
+            myThreads += 1;
+          }
+        });
+
+        if (myThreads >= 4) {
+          alert('Você já atingiu o limite de grupos criados.');
+          setLoading(false);
+        } else {
+          handleCreateRoom();
+          setLoading(false);
+        }
+      });
+
+
+
+
   };
 
   const handleCreateRoom = () => {
