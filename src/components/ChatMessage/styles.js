@@ -9,7 +9,7 @@ export const Wrapper = styled.SafeAreaView`
 export const MessageBox = styled.View`
   border-radius: 5px;
   padding: 10px;
-  background-color: ${({ colorBoxMessage }) => colorBoxMessage};
+  background-color: ${({ isMyMessage }) => isMyMessage ? 'rgba(82,177,88,0.5)' : 'rgba(255,217,153,0.5)'};
   margin-left: ${({ isMyMessage }) => isMyMessage ? '50px' : 0};
   margin-right: ${({ isMyMessage }) => isMyMessage ? 0 : '50px'};
 `;

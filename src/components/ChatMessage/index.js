@@ -1,12 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, { useMemo } from 'react';
 import * as S from './styles';
 import PropTypes from 'prop-types';
 
 import auth from '@react-native-firebase/auth';
 
-export default function ChatMessage({ data, idSendMessage, colorBoxMessage, isMyMessage }) {
+export default function ChatMessage({ data, idSendMessage, colorBoxMessage }) {
   const user = auth().currentUser.toJSON();
+  const isMyMessage = useMemo(() => {
+    return data?.user?._id === user.uid;
+  }, [data]);
 
   return (
     <S.Wrapper>

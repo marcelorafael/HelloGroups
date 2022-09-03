@@ -71,6 +71,40 @@ export default function Messages({ route }) {
     }
   }, [isMyMessage]);
 
+  const handleSend = async () => {
+    if (inputMessage === '') { return; }
+
+    await firestore()
+      .collection('MESSAGE_THREADS')
+      .doc(thread._id)
+      .collection('MESSAGES')
+      .add({
+        text: inputMessage,
+        createAt: firestore.FieldValue.serverTimestamp(),
+        user: {
+          _id: user.uid,
+          displayName: user.displayName,
+        },
+      });
+
+    await firestore()
+      .collection('MESSAGE_THREADS')
+      .doc(thread._id)
+      .set(
+        {
+          lastMessage: {
+            text: inputMessage,
+            createAt: firestore.FieldValue.serverTimestamp(),
+
+          },
+
+        },
+        { merge: true }
+      );
+
+    setInputMessage('');
+  };
+
 
   return (
     <S.Wrapper>
@@ -102,7 +136,7 @@ export default function Messages({ route }) {
 
           </S.MainInputChangeMessage>
 
-          <S.SendButton>
+          <S.SendButton onPress={() => handleSend()}>
             <S.ButtonContainer>
               <Feather name="send" color="#fff" />
             </S.ButtonContainer>

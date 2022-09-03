@@ -5,6 +5,8 @@ export const Wrapper = styled.SafeAreaView`
   flex: 1;
   justify-content: center;
   align-items: center;
+
+  background-color: ${({ theme }) => theme?.colors?.backgroundAll} ;
 `;
 
 export const ListMessages = styled.FlatList`
@@ -23,7 +25,7 @@ export const MainInputChangeMessage = styled.View`
   align-items: center;
   background-color: ${({ theme }) => theme?.colors?.lightWhite};
 
-  border-radius: ${({ theme }) => theme?.border?.radius};
+  border-radius: 20px;
   margin-right: 5px;
 
   flex: 1;
