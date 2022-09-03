@@ -103,7 +103,7 @@ export default function ChatRoom() {
             setThreads(threads);
             setLoading(false);
 
-            console.log(threads);
+            // console.log(threads);
           }
         })
         .catch();
@@ -112,7 +112,7 @@ export default function ChatRoom() {
     getChats();
 
     return () => {
-      console.log('UnMounting');
+      // console.log('UnMounting');
 
       isActive = false;
     };

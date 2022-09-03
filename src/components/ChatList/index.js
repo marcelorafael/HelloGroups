@@ -9,7 +9,6 @@ export default function ChatList({ data, deleteRoom }) {
   const navigation = useNavigation();
 
   const openChat = () => {
-    console.log(data);
     navigation.navigate('Messages', { thread: data });
   };
   return (
