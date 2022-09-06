@@ -9,7 +9,9 @@ export const Wrapper = styled.SafeAreaView`
   background-color: ${({ theme }) => theme?.colors?.backgroundAll} ;
 `;
 
-export const ListMessages = styled.FlatList`
+export const ListMessages = styled.FlatList.attrs({
+  inverted: true,
+})`
   width: 100%;
 `;
 
@@ -40,6 +42,7 @@ export const InputMessage = styled.TextInput.attrs({
 
   max-height: 130px;
   min-height: 48px;
+
 `;
 
 export const SendButton = styled.TouchableOpacity.attrs({

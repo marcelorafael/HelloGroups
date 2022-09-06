@@ -9,6 +9,8 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 import Feather from 'react-native-vector-icons/Feather';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 // COMPONENTS
 import ChatMessage from '../../components/ChatMessage';
@@ -138,7 +140,7 @@ export default function Messages({ route }) {
 
           <S.SendButton onPress={() => handleSend()}>
             <S.ButtonContainer>
-              <Feather name="send" color="#fff" />
+              <Feather size={18} name="send" color="#fff" />
             </S.ButtonContainer>
           </S.SendButton>
         </S.ContainerInputChangeMessage>

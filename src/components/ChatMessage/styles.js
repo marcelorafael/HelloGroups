@@ -2,12 +2,14 @@
 import styled from 'styled-components/native';
 
 export const Wrapper = styled.SafeAreaView`
-  padding-right: 10px;
-  padding-left: 10px;
+  padding: 10px;
 `;
 
 export const MessageBox = styled.View`
-  border-radius: 5px;
+  border-radius: 10px;
+  border-top-right-radius: ${({ isMyMessage }) => isMyMessage ? '30px' : 0};
+  border-top-left-radius: ${({ isMyMessage }) => isMyMessage ? 0 : '30px'};
+
   padding: 10px;
   background-color: ${({ isMyMessage }) => isMyMessage ? 'rgba(82,177,88,0.5)' : 'rgba(255,217,153,0.5)'};
   margin-left: ${({ isMyMessage }) => isMyMessage ? '50px' : 0};

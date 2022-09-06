@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SignIn from '../screens/SignIn';
 import ChatRoom from '../screens/ChatRoom';
 import Messages from '../screens/Messages';
-// import ChatRoom from '../screens/ChatRoom'
+import Search from '../screens/Search';
 // import ChatRoom from '../screens/ChatRoom'
 
 const AppStack = createNativeStackNavigator();
@@ -39,6 +39,14 @@ export default function AppRoutes(params) {
         options={({ route }) => ({
           title: route.params.thread.name,
         })}
+      />
+
+      <AppStack.Screen
+        name="Search"
+        component={Search}
+        options={{
+          title: 'Procurar grupo.',
+        }}
       />
     </AppStack.Navigator>
   );
