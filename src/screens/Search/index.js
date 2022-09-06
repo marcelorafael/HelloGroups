@@ -2,12 +2,16 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import * as S from './styles';
-import { Keyboard } from 'react-native';
+import { Keyboard, ActivityIndicator } from 'react-native';
 
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+
+import ChatList from '../../components/ChatList';
 
 import { useIsFocused } from '@react-navigation/native';
 export default function Search() {
@@ -15,6 +19,7 @@ export default function Search() {
   const [input, setInput] = useState('');
   const [user, setUser] = useState('');
   const [chats, setChats] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
 
@@ -26,6 +31,8 @@ export default function Search() {
 
   const handleSearch = async () => {
     if (input === '') { return; }
+
+    setLoading(true);
 
     const responseSearch = await firestore()
       .collection('MESSAGE_THREADS')
@@ -43,7 +50,7 @@ export default function Search() {
         });
 
         setChats(threads);
-        console.log(threads);
+        setLoading(false);
         setInput('');
         Keyboard.dismiss();
       });
@@ -61,9 +68,23 @@ export default function Search() {
           autoCapitalize="none"
         />
         <S.ButtonSearch onPress={() => handleSearch()}>
-          <MaterialIcons name="search" size={30} color="#FFF" />
+          {loading ? <ActivityIndicator color="#efa030" size="large" /> : <MaterialIcons name="search" size={30} color="#FFF" />}
         </S.ButtonSearch>
       </S.ContainerInput>
+
+      {chats.length > 0 ? (<S.ListChats
+        showsVerticalScrollIndicator={false}
+        data={chats}
+        keyExtractor={item => item._id}
+        renderItem={({ item }) => (
+          <ChatList data={item} />
+        )}
+      />) : (
+        <S.ContainerWrong>
+          <S.AlternativeText>Grupo inesistente ou nome digitado errado.</S.AlternativeText>
+          <Ionicons name="chatbubbles" size={50} color="#3075DD" />
+        </S.ContainerWrong>
+      )}
     </S.Wrapper>
   );
 }

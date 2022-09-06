@@ -36,3 +36,15 @@ export const ButtonSearch = styled.TouchableOpacity.attrs({
   margin-left: 5px;
   margin-right: 10px;
 `;
+
+export const ListChats = styled.FlatList``;
+
+export const AlternativeText = styled.Text`
+  color: ${({ theme }) => theme?.colors?.primary} ;
+`;
+
+export const ContainerWrong = styled.View`
+flex: 1;
+align-items: center;
+justify-content: center;
+`;
